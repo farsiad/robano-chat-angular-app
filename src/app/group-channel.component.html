@@ -1,0 +1,91 @@
+<div class="page_wrap">
+  <div class="tg_page_head">
+    <div class="navbar navbar-static-top navbar-inverse" role="navigation">
+      <div class="container">
+        <a class="navbar-peer-wrap peer_photo_init" *ngIf="robanoGroupChannel">
+          <img src="{{ robanoGroupChannel.avatarUrl }}">
+        </a>
+        <div class="navbar-header">
+          <a class="navbar-brand tg_logo_wrap">
+
+          </a>
+          <div class="tg_head_peer_menu_wrap">
+            <ul class="nav navbar-nav navbar-quick-nav">
+              <li>
+                <a href="#" (click)="goBack()" class="navbar-quick-profile-back">
+                  <i class="icon icon-back"></i>
+                  <div class="navbar-quick-back-title" *ngIf="robanoGroupChannel">
+                    <h4>{{ robanoGroupChannel.channelTitle }}</h4>
+                    <small *ngIf="!isTyping">{{ robanoGroupChannel.channelSubtitle }}</small>
+                    <small *ngIf="isTyping">در حال تایپ کردن ...</small>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="im_page_wrap">
+    <div class="im_page_split clearfix">
+      <div class="im_history_col_wrap im_history_loaded">
+        <div class="im_history_selected_wrap">
+          <div class="im_history_col">
+            <div class="im_history_wrap im_history_scrollable_wrap mobile_scrollable_wrap" #imHistoryWrap [style.height.px]="imHistoryWrapHeight" style="position: relative;">
+              <div class="im_history_scrollable" *ngIf="!isLoading">
+                <div class="im_history im_history_selectable">
+                  <div class="im_history_messages">
+                    <div class="im_history_messages_peer">
+                      <div class="im_history_message_wrap" *ngFor="let message of messages">
+                        <div class="im_message_outer_wrap">
+                          <div class="im_message_wrap clearfix">
+                            <div class="im_content_message_wrap" [class.im_message_in]="message._sender.userId !== userId" [class.im_message_out]="message._sender.userId === '5411dcc6-2150-4107-be21-5f4bfdff4e04'">
+                              <div class="im_message_meta">
+                                <span class="im_message_date">
+                                  <span class="im_message_date_text" dir="ltr">{{ message.createdAt | jalali }}</span>
+                                </span>
+                              </div>
+                              <div>
+                                <div class="im_message_body">
+                                  <div class="im_message_text">
+                                    {{ message.message }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  *ngIf="isLoading" style="text-align: center; right: 0; left: 0; margin-top: -45px; position: fixed; top: 50%">
+                <img src="/assets/img/spinner.gif" width="64" />
+                <p>لطفا صبر کنید ...</p>
+              </div>
+            </div>
+            <div  class="im_bottom_panel_wrap" #imBottomPanelWrap>
+              <div class="im_send_panel_wrap">
+                <div class="im_send_form_wrap1">
+                  <div class="im_send_form_wrap clearfix">
+                    <form class="im_send_form im_send_form_empty" #imSendForm="ngForm" (ngSubmit)="imSendFormSubmit()">
+                      <div class="im_send_field_panel">
+                        <div class="im_send_field_wrap">
+                          <div class="composer_rich_textarea editable" (input)="newImMessage = $event.target.innerText" #newImMessageElem [contentEditable]="true" placeholder="پیام خود را بنویسید ..."></div>
+                          <!--<input type="text" autocomplete="false" (autocomplete)="false"  class="composer_rich_textarea" required  style="width: 100%;padding: 0 6px;margin-left: 6px;"  />-->
+                        </div>
+                        <button type="submit" [disabled]="!imSendForm.form.valid || isSendingMessage || isLoading" class="btn im_submit"></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

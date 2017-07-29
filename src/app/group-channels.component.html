@@ -1,0 +1,46 @@
+<div class="page_wrap">
+  <div class="tg_page_head">
+    <div class="navbar navbar-static-top  navbar-inverse navbar_peer_not_selected">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand tg_logo_wrap" style="color: white">روبانو</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="im_page_split">
+    <div class="im_dialogs_col im_dialogs_scrollable_wrap mobile_scrollable_wrap" style="position: relative;" [style.height.px]="imDialogsColHeight">
+      <ul class="nav nav-pills nav-stacked" *ngIf="!isLoading">
+        <li class="im_dialog_wrap" *ngFor="let robanoGroupChannel of robanoGroupChannels">
+          <a class="im_dialog" [routerLink]="['/channels', robanoGroupChannel.channelUrl]">
+            <div class="im_dialog_meta pull-left text-left">
+              <div class="im_dialog_date" *ngIf="robanoGroupChannel.groupChannel.lastMessage" dir="ltr">
+                {{ robanoGroupChannel.groupChannel.lastMessage.createdAt | jalali }}
+              </div>
+              <span class="im_dialog_badge badge im_dialog_badge_muted" *ngIf="robanoGroupChannel.groupChannel.unreadMessageCount > 0">
+            {{ robanoGroupChannel.groupChannel.unreadMessageCount }}
+          </span>
+            </div>
+            <div class="im_dialog_photo pull-right peer_photo_init">
+              <img class="im_dialog_photo" src="{{ robanoGroupChannel.avatarUrl }}" />
+            </div>
+            <div class="im_dialog_message_wrap">
+              <div class="im_dialog_peer">{{ robanoGroupChannel.channelTitle }}</div>
+              <div class="im_dialog_subtitle">{{ robanoGroupChannel.channelSubtitle }}</div>
+              <div class="im_dialog_message" *ngIf="robanoGroupChannel.groupChannel.lastMessage">
+                <span class="im_short_message_text">
+                  <span *ngIf="robanoGroupChannel.groupChannel.isTyping()">در حال تایپ کردن ...</span>
+                  <span *ngIf="!robanoGroupChannel.groupChannel.isTyping()">{{ robanoGroupChannel.groupChannel.lastMessage.message }}</span>
+                </span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div  *ngIf="isLoading" style="text-align: center; right: 0; left: 0; margin-top: -45px; position: fixed; top: 50%">
+        <img src="/assets/img/spinner.gif" width="64" />
+        <p>لطفا صبر کنید ...</p>
+      </div>
+    </div>
+  </div>
+</div>
