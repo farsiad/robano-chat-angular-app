@@ -135,7 +135,7 @@ export class GroupChannelComponent implements OnInit, AfterViewInit, AfterViewCh
             robanoMessage.markAsRead = true;
             robanoMessage.source = 'web';
             console.log('robanoMessage', robanoMessage);
-            this.robanoService.sendMessage('group_channels', this.robanoGroupChannel.channelUrl, robanoMessage)
+            this.robanoService.sendMessage(message.channelType, message.channelUrl, robanoMessage)
               .then(response => {
                 console.log(response);
               });
